@@ -11,21 +11,46 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.17-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-🚀 AI-Powered GitHub Repository Explorer | Understand codebases instantly with AI-driven insights
+🚀 **AI-Powered GitHub Repository Explorer** | Understand any codebase instantly with AI-driven insights
 
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Configuration](#configuration)
+**Analyze any public GitHub repository with AI assistance - no cloning required!**
 
+[Features](#-features) • [Quick Start](#-quick-start) • [Installation](#-installation) • [Troubleshooting](#-troubleshooting) • [Documentation](#-documentation)
+
+---
+
+### ✨ What's New in This Version
+
+- 🔄 **Smart Caching System**: Redis with automatic file-based fallback (no configuration required!)
+- ⚡ **Enhanced Timeout Handling**: Increased timeout limits for large repositories
+- 🛡️ **Production Ready**: Graceful error handling and automatic recovery
+- 📚 **Comprehensive Documentation**: Detailed guides for setup, troubleshooting, and deployment
+- 🎯 **Optimized Git Operations**: Better handling of large repositories and slow networks
 
 </div>
 
 ## 🌟 Features
 
-- 🤖 **AI-Powered Analysis**: Leverages Google's Gemini AI to provide intelligent insights about repositories
-- 📁 **Smart File Explorer**: Navigate through repository files with ease
-- 💬 **Interactive Chat**: Ask questions about the codebase and get detailed responses
-- 🎨 **Modern UI**: Beautiful dark-mode interface built with TailwindCSS
-- 🔄 **Real-time Updates**: Instant responses and updates as you explore
-- 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
+### Core Features
+- 🤖 **AI-Powered Analysis**: Leverages Google's Gemini AI to provide intelligent insights about any repository
+- 💬 **Interactive Chat**: Ask questions about the codebase and get detailed, context-aware responses
+- 📁 **Smart File Explorer**: Navigate through repository files with syntax highlighting and code preview
+- 🔍 **Deep Code Understanding**: Get explanations for functions, dependencies, architecture, and more
+- 📊 **Repository Summary**: Automatic analysis of structure, technologies, and key components
+
+### Technical Features
+- ⚡ **Smart Caching**: Automatic Redis/file-based caching for instant re-analysis
+- 🔄 **Real-time Updates**: Instant responses as you explore repositories
+- 🛡️ **Robust Error Handling**: Graceful fallbacks and automatic recovery
+- 🎨 **Modern UI**: Beautiful dark-mode interface built with TailwindCSS and shadcn/ui
+- 📱 **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- 🐳 **Docker Support**: Easy deployment with Docker
+
+### Developer Experience
+- 🚀 **One-Command Start**: Launch both services with a single script
+- 📚 **Comprehensive Docs**: Detailed guides for setup, troubleshooting, and deployment
+- 🔧 **Flexible Configuration**: Easy customization of AI models, timeouts, and caching
+- 🆓 **Free Tier Friendly**: Works great with free tiers of GitHub and Gemini APIs
 
 <h2>🎬 Watch AnswerGit Demo</h2>
 
@@ -36,33 +61,92 @@ https://github.com/user-attachments/assets/e975a943-e512-445a-8b40-8061b18a9b16
   Your browser does not support the video tag.
 </video>
 
-## 🚀 Installation
+## ⚡ Quick Start
 
-1. **Clone the repository**
+**Get up and running in 3 steps:**
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
+# 1. Clone and install
+git clone https://github.com/Puranjaysalaria/Repogitanswer.git
+cd Repogitanswer
+pnpm install
+
+# 2. Create .env.local with your API keys
+# GEMINI_API_KEY=your_gemini_api_key
+# GITHUB_TOKEN=your_github_token
+# GITINGEST_API_URL=http://localhost:8000
+
+# 3. Start both services (Windows)
+start.bat
+# Or manually in two terminals:
+# Terminal 1: cd gitingest-api && python main.py
+# Terminal 2: pnpm dev
 ```
 
-2. **Install dependencies**
-```bash
-pnpm install
-# or
-npm install
-# or
-yarn install
+**Open http://localhost:3000** and start exploring repositories! 🎉
 
-# Alternatively, use Docker:
+> 💡 **First time?** Try analyzing `octocat/Hello-World` to test your setup!
+
+---
+
+## 🚀 Installation
+
+### Prerequisites
+- **Node.js** 16+ (with npm/pnpm/yarn)
+- **Python** 3.8+ (with pip)
+- **Git** installed and in PATH
+- **Internet connection** for cloning repositories
+
+### Step-by-Step Setup
+
+#### 1. Clone the repository
+```bash
+git clone https://github.com/Puranjaysalaria/Repogitanswer.git
+cd Repogitanswer
+```
+
+#### 2. Install dependencies
+
+**Node.js dependencies:**
+```bash
+pnpm install  # Recommended
+# OR
+npm install
+# OR
+yarn install
+```
+
+**Python dependencies (for GitIngest API):**
+```bash
+cd gitingest-api
+pip install -r requirements.txt
+cd ..
+```
+
+**Docker alternative:**
+```bash
 docker build -t answergit .
 ```
 
-3. **Set up environment variables**
+#### 3. Set up environment variables
 
-Create a `.env.local` file in the root directory with the following variables:
+Create a `.env.local` file in the root directory:
+
 ```env
+# Required: Google Gemini API Key (get from https://aistudio.google.com/app/apikey)
 GEMINI_API_KEY=your_gemini_api_key
+
+# Required: GitHub Personal Access Token (get from https://github.com/settings/tokens)
 GITHUB_TOKEN=your_github_token
+
+# Required: GitIngest API URL (local Python service)
+GITINGEST_API_URL=http://localhost:8000
+
+# Optional: Redis URL (leave empty to use file-based cache)
+REDIS_URL=
 ```
+
+> 📝 **Note:** The `.env.local` file is already in `.gitignore` - your keys are safe!
 
 ### 🔑 Getting Your API Keys
 
@@ -119,40 +203,48 @@ Customize the application by modifying:
 
 ## 🚀 Usage
 
-### Quick Start (Recommended)
+### Starting the Application
+
+#### Option 1: One-Command Start (Recommended) 🎯
 ```bash
-# Windows: Double-click start.bat or run:
+# Windows:
 start.bat
 
-# Or use PowerShell:
+# Or PowerShell:
 .\start.ps1
 ```
-This will start both the GitIngest API and Next.js automatically!
+This automatically starts both the GitIngest API and Next.js dev server!
 
-### Manual Start
-**Terminal 1 - Start GitIngest API (Required):**
+#### Option 2: Manual Start (Two Terminals)
+
+**Terminal 1 - GitIngest API (Required):**
 ```bash
 cd gitingest-api
 python main.py
-# Should show: Uvicorn running on http://0.0.0.0:8000
+# ✅ Wait for: "Uvicorn running on http://0.0.0.0:8000"
 ```
 
-**Terminal 2 - Start Next.js:**
+**Terminal 2 - Next.js App:**
 ```bash
 pnpm dev
-# or
-npm run dev
-# or
-yarn dev
+# OR: npm run dev
+# OR: yarn dev
+# ✅ Wait for: "ready - started server on 0.0.0.0:3000"
+```
 
-# Alternatively, run with Docker:
+#### Option 3: Docker
+```bash
 docker run -p 3000:3000 answergit
 ```
 
-> ⚠️ **Important:** You need BOTH servers running for the app to work!
+> ⚠️ **Important:** You need BOTH services running (GitIngest API + Next.js)!
 
-2. **Open your browser**
-Navigate to `http://localhost:3000`
+### Using the Application
+
+**1. Open your browser**
+```
+http://localhost:3000
+```
 
 > 💡 **Tip:** Start with small repositories like `octocat/Hello-World` to test your setup!
 
@@ -184,44 +276,135 @@ Use the AI assistant to:
 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d8fc6049-e7c1-4c79-8b78-2d3ef0a63af8" />
 
+---
+
+## 📚 Documentation
+
+Detailed guides available:
+
+- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Complete troubleshooting guide for all common issues
+- **[REDIS-SETUP.md](REDIS-SETUP.md)** - Optional Redis setup for production (not needed for local dev)
+- **[CACHE-COMPARISON.md](CACHE-COMPARISON.md)** - File cache vs Redis comparison and performance
+- **[SETUP-SUMMARY.md](SETUP-SUMMARY.md)** - Complete setup explanation and system architecture
+
+---
+
 ## 🐛 Troubleshooting
 
-Having issues? Check our comprehensive [TROUBLESHOOTING.md](TROUBLESHOOTING.md) guide for:
-- Redis cache warnings (safe to ignore)
-- Git clone failures and network errors
-- Storage and performance concerns
-- Rate limiting issues
-- Complete setup verification
+### Quick Fixes
 
-### Common Issues Quick Fix:
+<details>
+<summary><b>❌ "Repository analysis fails / timeouts"</b></summary>
 
-**"Works only for answergit repo but fails for others?"**
+**Causes:**
+- Repository is too large
+- Slow internet connection
+- GitIngest API not running
+
+**Solutions:**
 1. Ensure GitIngest API is running: `cd gitingest-api && python main.py`
 2. Check `.env.local` has `GITINGEST_API_URL=http://localhost:8000`
-3. Try smaller repos first (e.g., `octocat/Hello-World`)
-4. Check your internet connection (repos are cloned temporarily)
+3. Try a smaller repo first: `octocat/Hello-World`
+4. Check internet connection (repos are downloaded temporarily)
+5. For large repos, wait up to 5 minutes for initial analysis
 
-**"Does it use my laptop's storage?"**
-Yes, temporarily: Repos are cloned to `%TEMP%\gitingest\` and auto-deleted after analysis.
+</details>
 
-**See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed solutions!**
+<details>
+<summary><b>⚠️ "Redis cache warnings"</b></summary>
+
+**Status:** ✅ Safe to ignore!
+
+**Explanation:** Redis is optional. The app automatically uses file-based cache when Redis isn't configured. No action needed!
+
+</details>
+
+<details>
+<summary><b>💾 "Does it use my laptop's storage?"</b></summary>
+
+**Answer:** Yes, temporarily.
+
+- **Location:** `C:\Users\YourName\AppData\Local\Temp\gitingest\`
+- **Duration:** Only during analysis (auto-deleted after)
+- **Size:** Depends on repository (few MB to 100+ MB)
+- **Cache:** Small JSON files in `./cache/` folder (permanent but tiny)
+
+</details>
+
+<details>
+<summary><b>🚫 "JavaScript heap out of memory"</b></summary>
+
+**Cause:** Repository is too large for Node.js default memory.
+
+**Solution:**
+```bash
+# Increase Node.js memory limit
+set NODE_OPTIONS=--max-old-space-size=4096
+pnpm dev
+```
+
+</details>
+
+### 📖 Full Troubleshooting Guide
+
+**See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for:**
+- Detailed error explanations
+- Step-by-step debugging
+- Performance optimization
+- Deployment issues
+- Complete setup verification
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Here's how you can help:
+
+1. 🐛 **Report bugs** - Open an issue with detailed reproduction steps
+2. 💡 **Suggest features** - Share your ideas for improvements
+3. 🔧 **Submit PRs** - Fix bugs or add features
+4. 📚 **Improve docs** - Help make the documentation better
+5. ⭐ **Star the repo** - Show your support!
+
+**Development Setup:**
+```bash
+# Fork the repo, clone your fork, then:
+git checkout -b feature/your-feature-name
+# Make your changes
+git commit -m "Add some feature"
+git push origin feature/your-feature-name
+# Open a Pull Request!
+```
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+Free to use, modify, and distribute! 🎉
 
 ## 🙏 Acknowledgments
 
-- Built with [Next.js](https://nextjs.org/)
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
-- AI powered by [Google Gemini](https://deepmind.google/technologies/gemini/)
+### Built With
+- 🚀 [Next.js](https://nextjs.org/) - React framework
+- ⚛️ [React](https://reactjs.org/) - UI library
+- 🎨 [TailwindCSS](https://tailwindcss.com/) - Styling
+- 🧩 [shadcn/ui](https://ui.shadcn.com/) - UI components
+- 🤖 [Google Gemini](https://deepmind.google/technologies/gemini/) - AI model
+- 📦 [GitIngest](https://gitingest.com/) - Repository ingestion
+- 🐙 [GitHub API](https://docs.github.com/en/rest) - Repository data
+
+### Special Thanks
+- Original project by [Puranjay Salaria](https://github.com/Puranjaysalaria/answergit)
+- All contributors and users of this project
 
 ---
 
 <div align="center">
-Made with ❤️ | Forked from <a href="https://github.com/Puranjaysalaria/answergit">AnswerGit by Puranjay Salaria</a>
+
+### 🌟 Star this repo if you find it useful!
+
+[![GitHub stars](https://img.shields.io/github/stars/Puranjaysalaria/Repogitanswer?style=social)](https://github.com/Puranjaysalaria/Repogitanswer)
+
+Made with ❤️ | Enhanced version of [AnswerGit](https://github.com/Puranjaysalaria/answergit) by Puranjay Salaria
+
+**[⬆ Back to Top](#answergit-)**
+
 </div>
