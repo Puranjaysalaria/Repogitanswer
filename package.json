@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "next build",
+    "render-build": "npm install --legacy-peer-deps && npm run build"
   },
   "dependencies": {
     "@ai-sdk/openai": "latest",
