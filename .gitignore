@@ -29,4 +29,6 @@ next-env.d.ts
 # Python cache
 __pycache__/
 
-#
+# Cache folder (contains repository data)
+cache/*
+!cache/.gitkeep
